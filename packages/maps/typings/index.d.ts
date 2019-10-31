@@ -51,6 +51,8 @@ export interface IMaptalksInstance {
     canvasContainer: HTMLElement;
   }
 
+  getContainer: () => HTMLElement;
+
   getZoom: () => number;
   getResolution: () => number;
   setZoom: (zoom: number) => IMaptalksInstance;

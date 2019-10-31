@@ -74,7 +74,7 @@ export default class MaptalksService implements IMaptalksService {
 
   // init
   public addMarkerContainer(): void {
-    const container = this.map._panels['ui'];
+    const container = this.map.getContainer();
     this.markerContainer = DOM.create('div', 'l7_marker', container);
   }
 
@@ -92,9 +92,7 @@ export default class MaptalksService implements IMaptalksService {
 
   public getContainer(): HTMLElement | null {
     const { layerContainer } = this.$mapConfig;
-    const c = layerContainer === 'front' ? this.map._panels['frontStatic'] : this.map._panels['backStatic'];
-    console.log(c);
-    return c;
+    return layerContainer === 'front' ? this.map._panels['frontStatic'] : this.map._panels['backStatic'];
   }
 
   public getSize(): [number, number] {

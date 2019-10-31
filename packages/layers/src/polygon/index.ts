@@ -5,7 +5,11 @@ import polygon_frag from './shaders/polygon_frag.glsl';
 import polygon_vert from './shaders/polygon_vert.glsl';
 
 interface IPolygonLayerStyleOptions {
-  opacity: number;
+  opacity?: number;
+  baseColor?: string;
+  windowColor?: string;
+  //brightColor:'rgb(155,217,255)'
+  brightColor?: string;
 }
 
 export function polygonTriangulation(feature: IEncodeFeature) {

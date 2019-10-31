@@ -3,6 +3,7 @@ import * as React from 'react';
 import AMap from './components/AMap';
 import Mapbox from './components/Mapbox';
 import Maptalks from './components/Maptalks';
+// import MaptalksBuilding from './components/MaptalksBuilding';
 // import Polygon from './components/Polygon';
 // import Point3D from './components/Point3D';
 // import Line from './components/Line';
@@ -22,6 +23,9 @@ storiesOf('地图底图', module)
   .add('Maptalks', () => <Maptalks />, {
     notes: { markdown: notes },
   });
+  // .add('MaptalksBuilding', () => <MaptalksBuilding />, {
+  //   notes: { markdown: notes },
+  // });
 // .add('Polygon', () => <Polygon />);
 // .add('Point3D', () => <Point3D />)
 // .add('Line', () => <Line />)
