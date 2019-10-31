@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import AMap from './components/AMap';
 import Mapbox from './components/Mapbox';
+import Maptalks from './components/Maptalks';
 // import Polygon from './components/Polygon';
 // import Point3D from './components/Point3D';
 // import Line from './components/Line';
@@ -16,6 +17,9 @@ storiesOf('地图底图', module)
     notes: { markdown: notes },
   })
   .add('Mapbox', () => <Mapbox />, {
+    notes: { markdown: notes },
+  })
+  .add('Maptalks', () => <Maptalks />, {
     notes: { markdown: notes },
   });
 // .add('Polygon', () => <Polygon />);

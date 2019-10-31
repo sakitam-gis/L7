@@ -2156,6 +2156,16 @@
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
+"@maptalks/feature-filter@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@maptalks/feature-filter/download/@maptalks/feature-filter-1.0.0.tgz#bfcc7f705e6de5c6c3d3802a3b5081272c877fc8"
+  integrity sha1-v8x/cF5t5cbD04AqO1CBJyyHf8g=
+
+"@maptalks/function-type@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npm.taobao.org/@maptalks/function-type/download/@maptalks/function-type-1.2.3.tgz#2f5c33b095af452c727026801bf1496ff78fe777"
+  integrity sha1-L1wzsJWvRSxycCaAG/FJb/eP53c=
+
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@marionebl/sander/-/sander-0.6.1.tgz#1958965874f24bc51be48875feb50d642fc41f7b"
@@ -10099,6 +10109,16 @@ mapbox-gl@^1.2.1:
     tinyqueue "^2.0.0"
     vt-pbf "^3.1.1"
 
+maptalks@^0.45.1:
+  version "0.45.1"
+  resolved "https://registry.npm.taobao.org/maptalks/download/maptalks-0.45.1.tgz#61120d05a56079eebd1f950c08f8ebaa67886eca"
+  integrity sha1-YRINBaVgee69H5UMCPjrqmeIbso=
+  dependencies:
+    "@maptalks/feature-filter" "^1.0.0"
+    "@maptalks/function-type" "^1.2.3"
+    simplify-js "^1.2.1"
+    zousan "^2.3.3"
+
 markdown-escapes@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.3.tgz#6155e10416efaafab665d466ce598216375195f5"
@@ -13700,6 +13720,11 @@ simplebar@^4.2.3:
     lodash.throttle "^4.1.1"
     resize-observer-polyfill "^1.5.1"
 
+simplify-js@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.npm.taobao.org/simplify-js/download/simplify-js-1.2.3.tgz#a3422c1b9884d60421345eb44d2b872662df27f5"
+  integrity sha1-o0IsG5iE1gQhNF60TSuHJmLfJ/U=
+
 sisteransi@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.3.tgz#98168d62b79e3a5e758e27ae63c4a053d748f4eb"
@@ -15919,3 +15944,8 @@ yargs@^7.0.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+zousan@^2.3.3:
+  version "2.5.1"
+  resolved "https://registry.npm.taobao.org/zousan/download/zousan-2.5.1.tgz#514a8aad3cbba412fb59a4e0ebaffdd72e2dd4c6"
+  integrity sha1-UUqKrTy7pBL7WaTg66/91y4t1MY=

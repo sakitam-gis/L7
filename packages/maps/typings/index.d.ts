@@ -29,3 +29,73 @@ interface IMapboxInstance {
     height: number;
   };
 }
+
+export interface ICenter {
+  x: number;
+  y: number;
+}
+
+export interface IExtent {
+  projection?: any;
+  xmax: number;
+  xmin: number;
+  ymax: number;
+  ymin: number;
+}
+
+export interface IMaptalksInstance {
+  _panels: {
+    ui: HTMLElement;
+    backStatic: HTMLElement;
+    frontStatic: HTMLElement;
+    canvasContainer: HTMLElement;
+  }
+
+  getZoom: () => number;
+  getResolution: () => number;
+  setZoom: (zoom: number) => IMaptalksInstance;
+
+  getSize: () => { width: number; height: number };
+  setSize: (size: [number, number]) => IMaptalksInstance;
+
+  getCenter: () => ICenter;
+  setCenter: (center: [number, number]) => IMaptalksInstance;
+
+  getPitch: () => number;
+  setPitch: (pitch: number) => IMaptalksInstance;
+
+  getBearing: () => number;
+  setBearing: (bearing: number) => IMaptalksInstance;
+
+  getExtent: () => IExtent;
+
+  getMinZoom: () => number;
+  setMinZoom: (minZoom: number) => IMaptalksInstance;
+  setMaxZoom: (maxZoom: number) => IMaptalksInstance;
+  getMaxZoom: () => number;
+
+  zoomIn: () => IMaptalksInstance;
+  zoomOut: () => IMaptalksInstance;
+
+  panTo: (coordinates: any, options?: {
+    animation: boolean;
+    duration: number;
+  }) => IMaptalksInstance;
+
+  panBy: (point: any, options?: {
+    animation: boolean;
+    duration: number;
+  }) => IMaptalksInstance;
+
+  fitExtent: (extent: IExtent, zoomOffset?: number) => IMaptalksInstance;
+
+  setCenterAndZoom: (center: any, zoom: number) => IMaptalksInstance;
+
+  coordinateToContainerPoint: (coordinates: any) => any;
+  containerPointToCoordinate: (point: any) => any;
+
+  on: (...args: any[]) => IMaptalksInstance;
+  off: (...args: any[]) => IMaptalksInstance;
+
+  remove: () => void;
+}

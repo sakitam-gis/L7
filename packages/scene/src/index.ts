@@ -19,7 +19,7 @@ import {
   SceneEventList,
   TYPES,
 } from '@l7/core';
-import { AMapService, MapboxService } from '@l7/maps';
+import { AMapService, MapboxService, MaptalksService, IMaptalksMapConfig } from '@l7/maps';
 import { ReglRendererService } from '@l7/renderer';
 import { interfaces } from 'inversify';
 import { Map } from 'mapbox-gl';
@@ -70,8 +70,8 @@ class Scene {
   private controlService: IControlService;
 
   private iconService: IIconService;
-
-  public constructor(config: IMapConfig & IRenderConfig) {
+  // FIXME: config interfaces
+  public constructor(config: any) {
     const { type = MapType.amap } = config;
 
     // 根据用户传入参数绑定地图服务
@@ -80,6 +80,9 @@ class Scene {
       mapServiceImpl = MapboxService;
     } else if (type === MapType.amap) {
       mapServiceImpl = AMapService;
+    } else if (type === MapType.maptalks) {
+      // @ts-ignore
+      mapServiceImpl = MaptalksService;
     } else {
       throw new Error('不支持的地图服务');
     }

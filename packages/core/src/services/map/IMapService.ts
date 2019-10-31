@@ -57,6 +57,7 @@ export interface IMapService {
 export enum MapType {
   amap = 'amap',
   mapbox = 'mapbox',
+  maptalks = 'maptalks',
 }
 
 /**
