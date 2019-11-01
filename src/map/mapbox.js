@@ -9,8 +9,6 @@ const PROJECTION_WORLD_SIZE = WORLD_SIZE / (MERCATOR_A * Math.PI) / 2;
 export default class MapBox extends Base {
   getDefaultCfg() {
     return Util.assign(Global.scene, {
-      resizeEnable: true,
-      viewMode: '3D'
     });
   }
   static project(lnglat) {
@@ -21,19 +19,30 @@ export default class MapBox extends Base {
   }
   constructor(cfg) {
     super(cfg);
-    this.container = this.get('container');
+    this.container = document.getElementById(this.get('id'));
+    this.handleRender = this.handleRender.bind(this);
     this.initMap();
     this.addOverLayer();
-    setTimeout(() => {
-      this.emit('mapLoad');
-    }, 10);
-
   }
 
   initMap() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoibHp4dWUiLCJhIjoiYnhfTURyRSJ9.Ugm314vAKPHBzcPmY1p4KQ';
-    this.map = new mapboxgl.Map(this._attrs);
+    this.map = new mapboxgl.Map({
+      container: this.container,
+      ...this._attrs
+    });
+
+    this.map.on('load', () => {
+      this.emit('mapLoad');
+
+      this.map.on('move', this.handleRender);
+    });
   }
+
+  handleRender() {
+    this.updateCamera();
+    this.emit('render');
+  }
+
   asyncCamera(engine) {
     this.engine = engine;
     const camera = engine._camera;
@@ -127,7 +136,7 @@ export default class MapBox extends Base {
   }
 
   projectFlat(lnglat) {
-    return this.map.lngLatToGeodeticCoord(lnglat);
+    return new mapboxgl.LngLat(lnglat).warp();
   }
   getCenter() {
     return this.map.getCenter();
@@ -136,19 +145,110 @@ export default class MapBox extends Base {
     return this.projectFlat(this.getCenter());
   }
   addOverLayer() {
-    const canvasContainer = document.getElementById(this.container);
+    const canvasContainer = this.map.getCanvasContainer();
     this.canvasContainer = canvasContainer;
     this.renderDom = document.createElement('div');
     this.renderDom.style.cssText += 'position: absolute;top: 0; z-index:10;height: 100%;width: 100%;pointer-events: none;';
     this.renderDom.id = 'l7_canvaslayer';
+    this.l7_marker_Container = document.createElement('div');
+    this.l7_marker_Container.className = 'l7_marker';
+    canvasContainer.appendChild(this.l7_marker_Container);
     canvasContainer.appendChild(this.renderDom);
   }
   mixMap(scene) {
     const map = this.map;
-    scene.getZoom = () => { return map.getZoom(); };
-    scene.getCenter = () => { return map.getCenter(); };
-    scene.getPitch = () => { return map.getPitch(); };
-    scene.containerToLngLat = point => { return map.unproject(point); };
+    scene.getSize = () => {
+      const size = map.transform;
+      return [ size.width, size.height ];
+    };
 
+    scene.getCenter = () => {
+      return map.getCenter();
+    };
+
+    scene.getSize = () => {
+      const size = map.transform;
+      return {
+        width: size.width,
+        height: size.height,
+      };
+    };
+
+    scene.getPitch = () => {
+      return map.getPitch();
+    };
+
+    scene.getRotation = () => {
+      return map.getBearing();
+    };
+
+    scene.setZoom = zoom => {
+      return map.setZoom(zoom);
+    };
+
+    scene.getZoom = zoom => {
+      return map.getZoom(zoom);
+    };
+
+    scene.getBounds = () => {
+      return map.getBounds().toArray();
+    };
+
+    scene.setZoomAndCenter = (zoom, center) => {
+      return map.flyTo({
+        zoom,
+        center
+      });
+    };
+
+    scene.setBounds = extent => {
+      return map.setBounds(extent);
+    };
+
+    scene.setRotation = rotation => {
+      return map.setBearing(rotation);
+    };
+
+    scene.zoomIn = () => {
+      return map.zoomIn();
+    };
+
+    scene.zoomOut = () => {
+      return map.zoomOut();
+    };
+
+    scene.panTo = lnglat => {
+      return map.panTo(lnglat);
+    };
+
+    scene.panBy = (x, y) => {
+      return map.panTo([ x, y ]);
+    };
+
+    scene.setPitch = pitch => {
+      return map.setPitch(pitch);
+    };
+
+    scene.pixelToLngLat = pixel => {
+      const coordinates = map.unproject(pixel);
+      return coordinates;
+    };
+
+    scene.lngLatToPixel = lnglat => {
+      return map.project(lnglat);
+    };
+
+    scene.fitBounds = extent => {
+      return map.fitBounds(extent);
+    };
+
+    scene.containerToLngLat = pixel => {
+      const coordinates = map.unproject(pixel);
+      return coordinates;
+    };
+
+    scene.lngLatToContainer = lnglat => {
+      return map.project(lnglat);
+    };
   }
 }

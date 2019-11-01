@@ -1,5 +1,18 @@
 import 'three/src/polyfills.js';
 import { BufferAttribute } from 'three/src/core/BufferAttribute.js';
+
+// export * from '../../build/three.js';
+function Float32BufferAttribute( array, itemSize, normalized ) {
+  if(Array.isArray( array )){
+    array = new Float32Array( array )
+  }
+	BufferAttribute.call( this, array, itemSize, normalized );
+
+}
+
+Float32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
+Float32BufferAttribute.prototype.constructor = Float32BufferAttribute;
+
 export * from 'three/src/constants.js';
 export { Scene } from 'three/src/scenes/Scene.js';
 export { WebGLRenderer } from 'three/src/renderers/WebGLRenderer.js';
@@ -43,15 +56,5 @@ export {
 } from 'three/src/core/BufferAttribute.js';
 
 export { InstancedBufferAttribute } from 'three/src/core/InstancedBufferAttribute'
-// export * from '../../build/three.js';
-function Float32BufferAttribute( array, itemSize, normalized ) {
-  if(Array.isArray( array )){
-    array = new Float32Array( array )
-  }
-	BufferAttribute.call( this, array, itemSize, normalized );
 
-}
-
-Float32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-Float32BufferAttribute.prototype.constructor = Float32BufferAttribute;
 export { Float32BufferAttribute }

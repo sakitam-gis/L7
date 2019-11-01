@@ -1,13 +1,18 @@
 import MapBox from './mapbox';
 import { default as AMap } from './AMap';
+import Maptalks from './maptalks';
+
 export {
   AMap,
-  MapBox
+  MapBox,
+  Maptalks
 };
 const MapType = {
   amap: AMap,
-  mapbox: MapBox
+  mapbox: MapBox,
+  maptalks: Maptalks
 };
+
 export const getMap = type => {
   return MapType[type.toLowerCase()];
 };

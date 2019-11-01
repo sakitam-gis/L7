@@ -29,6 +29,8 @@ export default class GaodeMap extends Base {
   constructor(cfg) {
     super(cfg);
     this.container = document.getElementById(this.get('id'));
+    this.handleRender = this.handleRender.bind(this);
+    this.handleMapMove = this.handleMapMove.bind(this);
     this.initMap();
   }
 
@@ -67,10 +69,21 @@ export default class GaodeMap extends Base {
     }
 
   }
+
+  handleRender() {
+    this.updateCamera();
+    this.emit('render');
+  }
+
+  handleMapMove() {
+    this.emit('render');
+  }
+
   asyncCamera(engine) {
     this._engine = engine;
     this.updateCamera();
-    this.map.on('camerachange', this.updateCamera.bind(this));
+    this.map.on('mapmove', this.handleMapMove);
+    this.map.on('camerachange', this.handleRender);
   }
   updateCamera() {
     const camera = this._engine._camera;
@@ -224,5 +237,13 @@ export default class GaodeMap extends Base {
       const ll = new AMap.LngLat(lnglat[0], lnglat[1]);
       return map.lngLatToGeodeticCoord(ll);
     };
+  }
+
+  destroy() {
+    if (this.map) {
+      this.map.off('mapmove', this.handleMapMove);
+      this.map.off('camerachange', this.handleRender);
+      this.map.destroy();
+    }
   }
 }

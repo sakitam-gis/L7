@@ -60,6 +60,7 @@ export default class Scene extends Base {
     const MapProvider = getMap(this.mapType);
     const Map = new MapProvider(this._attrs);
     Map.mixMap(this);
+    this.mapProvider = Map;
     this._container = Map.container;
     Map.on('mapLoad', () => {
       this.map = Map.map;
@@ -186,17 +187,13 @@ export default class Scene extends Base {
   }
   // 地图状态变化时更新可视化渲染
   registerMapEvent() {
-    this._updateRender = () => this._engine.update();
-    // this.map.on('mousemove', this._updateRender);
-    this.map.on('mapmove', this._updateRender);
-    this.map.on('camerachange', this._updateRender);
+    this._updateRender = () => this.render();
+    this.mapProvider.on('render', this._updateRender);
     window.addEventListener('onresize', this._updateRender);
   }
 
   unRegsterMapEvent() {
-    // this.map.off('mousemove', this._updateRender);
-    this.map.off('mapmove', this._updateRender);
-    this.map.off('camerachange', this._updateRender);
+    this.mapProvider.off('render', this._updateRender);
     window.removeEventListener('onresize', this._updateRender);
   }
   // control
@@ -210,6 +207,7 @@ export default class Scene extends Base {
     this.get('controlController').removeControl(ctr);
   }
   render() {
+    this.emit('camerachange');
     this._engine.update();
   }
   destroy() {
@@ -224,10 +222,8 @@ export default class Scene extends Base {
     this.style = null;
     this._engine.destroy();
     this._engine = null;
-    this.map.destroy();
+    this.mapProvider.destroy();
     this.unRegsterMapEvent();
     this._unRegistEvents();
-
-
   }
 }
